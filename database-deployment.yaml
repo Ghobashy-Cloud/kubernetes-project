@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database-container
+          image: your-database-image
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - mountPath: /data
+              name: database-volume
+      volumes:
+        - name: database-volume
+          persistentVolumeClaim:
+            claimName: your-pvc
